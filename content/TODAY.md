@@ -5,3 +5,19 @@
 - In the free time, learn some Python - the goal is to master Python within 1 week.
 - At 9:00 pm, attend scrum call of Fellowship.AI
 - Reach home by 10:00 pm.
+- study:
+	- langchain
+	- llama
+	- claude
+	- omniparser
+	- huggingface
+	- seeact
+	- lmstudio
+	- groq
+	- featherless.ai
+	- open-interpreter (python package)
+	- UFO - microsoft
+	- mistralAI
+	- web llama
+	- playwright
+	- 
