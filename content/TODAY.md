@@ -1,0 +1,7 @@
+## Plan for today
+- When boss arrives, ask him to explain email marketing in detail, ask him if the email domain is warmed-up, ask him to walk through an example of finding clients, discuss google maps API vs sales navigator.
+- Arrange a WiFi dongle by 3 pm.
+- Once WiFi dongle is connected, watch videos / articles on cold email marketing.
+- In the free time, learn some Python - the goal is to master Python within 1 week.
+- At 9:00 pm, attend scrum call of Fellowship.AI
+- Reach home by 10:00 pm.
