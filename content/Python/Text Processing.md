@@ -34,6 +34,7 @@ import re
 
 text = "yeah, but no, but yeah, but no, but yeah"
 date = "11/27/2012"
+note = "Today is 11/27/2012. PyCon starts at 3/13/2013."
 
 # Exact match
 text == "yeah" # False
@@ -42,7 +43,8 @@ text == "yeah" # False
 text.find("no") # 10
 
 pattern = re.compile(r"\d+/\d+/\d+")
-pattern.match(date) # <re.Match object; span=(0, 10), match="11/27/2012">
+pattern.match(date)   # <re.Match object; span=(0, 10), match="11/27/2012">
+pattern.findall(note) # ["11/27/2012", "3/13/2013"]
 ```
 
 ## Wildcard Matching
@@ -51,8 +53,55 @@ If you want to use wildcard matching as is available in Unix shells, you can the
 ```python
 from fnmatch import fnmatch, fnmatchcase
 
-fnmatch("foo.txt", "*.txt") # True
-fnmatch("foo.txt", "?oo.txt") # True
+fnmatch("foo.txt", "*.txt")       # True
+fnmatch("foo.txt", "?oo.txt")     # True
 fnmatch("dat45.csv", "dat[0-9]*") # True
-fnmatchcase("foo.txt", "*.TXT") # False
+fnmatchcase("foo.txt", "*.TXT")   # False
 ```
+
+## Replacing Text
+If you want to search and replace text, you can use the `replace()` method of the string class. For more complicated substitutions, you can use the `sub()` method of the `re` module. If you want more control over the substitution, you can pass a callback function to the `sub()` method.
+
+```python
+import re
+
+def callback_fn(m):
+	return "{} {} {}".format(m.group(3), m.group(1), m.group(2))
+
+text = "yeah, but no, but yeah, but no, but yeah"
+date = "11/27/2012"
+note = "Today is 11/27/2012. PyCon starts 3/13/2013."
+
+pattern = re.compile(r"(\d+)/(\d+)/(\d+)")
+
+text.replace("yeah", "yep")    # "yep, but no, but yep, but no, but yep"
+pattern.sub(r"\3-\1-\2", date) # "2012-11-27"
+pattern.sub(callback_fn, note) # "Today is 2012 11 27. PyCon starts 2013 3 13."
+```
+
+If you want to perform case-insensitive operations, you can pass `re.IGNORECASE` flag to these operations. If you want to match the case of the matched text, you can use a support function.
+
+```python
+import re
+
+text = "UPPER PYTHON. lower python. Mixed Python."
+
+def support_fn(word):
+	def replace(m):
+		text = m.group()
+		if text.isupper():
+			return word.upper()
+		elif text.islower():
+			return word.lower()
+		elif text[0].isupper():
+			return word.capitalize()
+		else:
+			return word
+	return replace
+
+re.sub("python", "snake", text, flags=re.IGNORECASE)
+# UPPER snake. lower snake. Mixed snake.
+re.sub("python", support_fn("snake"), text, flags=re.IGNORECASE)
+# "UPPER SNAKE. lower snake. Mixed Snake."
+```
+
